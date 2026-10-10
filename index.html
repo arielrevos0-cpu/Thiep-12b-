@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff0f4">
+<title>Thiệp động 20/10 · Tập thể nam lớp 12B</title>
+<style>
+:root{--rose:#e84f79;--wine:#7e3655;--cream:#fffaf3;--lilac:#a66caa;--gold:#e6b95c}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif;color:var(--wine)}
+body{min-height:100svh;overflow:hidden;background:linear-gradient(145deg,#fff4f2,#f9dce7 48%,#f2e6fa)}
+button{font:inherit}
+.app{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 12px 16px;position:relative;isolation:isolate}
+.glow{position:fixed;inset:-20%;z-index:-2;background:radial-gradient(circle at 18% 20%,#fff 0 4%,transparent 28%),radial-gradient(circle at 85% 75%,#f8b6cc88,transparent 30%);animation:glow 12s ease-in-out infinite alternate}
+.deck{width:min(100%,540px);height:min(76svh,780px);min-height:540px;position:relative;perspective:1000px}
+.page{position:absolute;inset:0;overflow:hidden;border:2px solid #ffffffd9;border-radius:28px;background:linear-gradient(150deg,#fffdf8 0%,#fff0f2 58%,#fff8e8 100%);box-shadow:0 24px 70px #8e3a5a2a,inset 0 0 0 7px #fff9;padding:clamp(20px,4.5vw,34px) clamp(17px,4.5vw,32px);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;visibility:hidden;transform:translateX(22px) scale(.99);transition:opacity .35s ease,transform .35s ease,visibility .35s}
+.page.active{opacity:1;visibility:visible;transform:translateX(0) scale(1)}
+.page:before,.page:after{position:absolute;content:"";width:150px;height:150px;border-radius:50%;filter:blur(1px);opacity:.55;z-index:-1}
+.page:before{top:-65px;left:-55px;background:radial-gradient(circle,#ffb3c6 0 20%,transparent 22% 100%);box-shadow:25px 32px 0 -7px #f6c3d1,48px 58px 0 -15px #f4d6a5}
+.page:after{right:-65px;bottom:-65px;background:radial-gradient(circle,#f2c4d3 0 22%,transparent 24% 100%);box-shadow:-28px -34px 0 -8px #f6dca7}
+.eyebrow{font:700 11px/1.5 Arial,sans-serif;text-transform:uppercase;letter-spacing:3px;color:#bd6a83}
+h1{font-size:clamp(34px,8.5vw,56px);line-height:1.04;margin:13px 0;color:#cf426b;text-shadow:2px 3px 0 #fff}
+h1 em{display:block;color:#85517f;font-weight:normal}
+h2{font-size:clamp(28px,7vw,42px);line-height:1.1;color:#c7436a;margin:10px 0}
+p{font-size:clamp(15px,3.8vw,19px);line-height:1.58;margin:8px auto;max-width:420px}
+.lead{font-size:clamp(17px,4.2vw,22px);color:#86516d}
+.art{font-size:clamp(46px,12vw,70px);line-height:1.25;margin:8px 0;filter:drop-shadow(0 5px 5px #c87b9130);animation:float 4s ease-in-out infinite}
+.art span{display:inline-block;animation:sway 4s ease-in-out infinite}.art span:nth-child(2){animation-delay:-1.2s}.art span:nth-child(3){animation-delay:-2.1s}
+.rule{width:90px;height:2px;background:linear-gradient(90deg,transparent,#e99bad,transparent);margin:10px auto}
+.quote{font-style:italic;color:#a74468}
+.signature{font-size:17px!important;color:#bd4b70;font-style:italic;margin-top:12px}
+.pageNo{font:700 11px Arial,sans-serif;letter-spacing:2px;color:#bd7890;margin-top:12px}
+.controls{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:12px;width:min(100%,540px)}
+.nav{border:1px solid #fff;background:#ffffffc9;color:#94465f;border-radius:999px;padding:11px 17px;font:700 14px Arial,sans-serif;box-shadow:0 6px 20px #9b4a6415;cursor:pointer}
+.nav:disabled{opacity:.35}
+.dots{display:flex;gap:7px;align-items:center}
+.dot{width:8px;height:8px;border:0;border-radius:50%;background:#dca5b6;padding:0}
+.dot.active{background:#c83f68;transform:scale(1.35)}
+.hint{font:11px Arial,sans-serif;color:#9e6277;margin-top:7px;text-align:center}
+#petals{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:5}
+.petal{position:absolute;top:-35px;left:var(--x);font-size:var(--size);opacity:0;will-change:transform;animation:fall var(--duration) linear var(--delay) forwards;transform:translate3d(0,0,0);backface-visibility:hidden;filter:drop-shadow(0 1px 1px #a94d6618)}
+@keyframes fall{0%{transform:translate3d(0,-8vh,0) rotate(0deg);opacity:0}10%{opacity:.78}90%{opacity:.68}100%{transform:translate3d(var(--drift),108vh,0) rotate(var(--spin));opacity:0}}
+@keyframes float{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-6px,0)}}
+@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+@keyframes glow{from{transform:translate3d(-1%,0,0)}to{transform:translate3d(1%,1%,0)}}
+@media(max-height:700px){.deck{height:73svh;min-height:480px}.page{padding-top:15px;padding-bottom:15px}p{line-height:1.45;margin:6px auto}.art{font-size:48px;margin:3px 0}.signature{margin-top:7px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="glow"></div><div id="petals" aria-hidden="true"></div>
+<main class="app">
+ <div class="deck" id="deck">
+  <section class="page active" aria-label="Trang 1: Giới thiệu tập thể nam lớp 12B">
+   <div class="eyebrow">Thiệp chúc mừng · 20 tháng 10</div>
+   <div class="art"><span>🌸</span><span>💐</span><span>🌸</span></div>
+   <h1>Những chàng trai <em>12B gửi yêu thương</em></h1>
+   <div class="rule"></div>
+   <p class="lead">Một món quà nhỏ, thay ngàn lời cảm ơn chân thành.</p>
+   <p>Chúng mình — tập thể các bạn nam lớp 12B — xin gửi tới cô giáo, mẹ và tất cả các bạn nữ những lời chúc tốt đẹp nhất nhân ngày Phụ nữ Việt Nam 20/10.</p>
+   <p class="quote">“Có những bông hoa làm đẹp cho khu vườn, có những người phụ nữ làm đẹp cho cả cuộc đời.”</p>
+   <div class="pageNo">01 / 04 · LỜI MỞ ĐẦU</div>
+  </section>
+  <section class="page" aria-label="Trang 2: Lời chúc cô giáo">
+   <div class="eyebrow">Trang 2 · Kính tặng cô</div>
+   <div class="art"><span>📚</span><span>🌷</span><span>🍎</span></div>
+   <h2>Kính chúc cô giáo</h2>
+   <p class="lead">Người lái đò thầm lặng của chúng em</p>
+   <div class="rule"></div>
+   <p>Nhân ngày 20/10, tập thể nam lớp 12B kính chúc cô luôn mạnh khỏe, hạnh phúc, rạng rỡ và tràn đầy nhiệt huyết.</p>
+   <p>Cảm ơn cô vì sự tận tâm, bao dung và những bài học quý giá. Cô không chỉ trao cho chúng em kiến thức mà còn dạy chúng em cách trưởng thành, sống tử tế và tin vào ước mơ.</p>
+   <p class="quote">Mong mỗi ngày đến lớp của cô đều ngập tràn niềm vui, tiếng cười và thật nhiều yêu thương!</p>
+   <div class="signature">Chúng em luôn biết ơn cô 💗</div>
+   <div class="pageNo">02 / 04 · TRI ÂN CÔ</div>
+  </section>
+  <section class="page" aria-label="Trang 3: Lời chúc mẹ">
+   <div class="eyebrow">Trang 3 · Gửi mẹ yêu</div>
+   <div class="art"><span>🫶</span><span>💐</span><span>💖</span></div>
+   <h2>Mẹ là điều tuyệt vời nhất</h2>
+   <p class="lead">Gửi người luôn yêu thương chúng con vô điều kiện</p>
+   <div class="rule"></div>
+   <p>Chúc mẹ luôn khỏe mạnh, bình an, vui vẻ và mỗi ngày đều có thật nhiều lý do để mỉm cười.</p>
+   <p>Cảm ơn mẹ vì những hy sinh âm thầm, những cái ôm ấm áp, những lời động viên và vì luôn là nơi chúng con có thể trở về sau mọi mệt mỏi.</p>
+   <p class="quote">Dù chúng con có lớn khôn đến đâu, tình yêu của mẹ vẫn luôn là mái nhà ấm áp nhất.</p>
+   <div class="signature">Con yêu mẹ nhiều lắm! 🌷</div>
+   <div class="pageNo">03 / 04 · YÊU THƯƠNG MẸ</div>
+  </section>
+  <section class="page" aria-label="Trang 4: Lời chúc các bạn nữ">
+   <div class="eyebrow">Trang 4 · Gửi những cô gái 12B</div>
+   <div class="art"><span>🎀</span><span>🌼</span><span>✨</span></div>
+   <h2>Chúc các bạn nữ 12B</h2>
+   <p class="lead">Luôn xinh tươi theo cách riêng của mình!</p>
+   <div class="rule"></div>
+   <p>Chúc các bạn luôn tự tin, học tốt, mạnh mẽ, vui vẻ và đạt được những điều mình mơ ước.</p>
+   <p>Mong thanh xuân của chúng ta có thật nhiều kỷ niệm đẹp, những tràng cười giòn tan, tình bạn chân thành và những ngày đến lớp đáng nhớ.</p>
+   <p class="quote">Hãy luôn tỏa sáng, dũng cảm là chính mình và nhớ rằng các bạn xứng đáng với mọi điều tốt đẹp!</p>
+   <div class="signature">Thân gửi từ tập thể các bạn nam lớp 12B 💝</div>
+   <div class="art" style="font-size:36px;margin:3px">🌸 💗 🌸</div>
+   <div class="pageNo">04 / 04 · GỬI NGÀN YÊU THƯƠNG</div>
+  </section>
+ </div>
+ <nav class="controls" aria-label="Điều hướng thiệp">
+  <button class="nav" id="prev" type="button">← Trước</button>
+  <div class="dots" id="dots">
+   <button class="dot active" aria-label="Trang 1"></button><button class="dot" aria-label="Trang 2"></button><button class="dot" aria-label="Trang 3"></button><button class="dot" aria-label="Trang 4"></button>
+  </div>
+  <button class="nav" id="next" type="button">Tiếp →</button>
+ </nav>
+ <div class="hint">Chạm “Tiếp” để lật từng trang · Hoa rơi nhẹ xuyên suốt thiệp</div>
+</main>
+<script>
+(() => {
+ const pages=[...document.querySelectorAll('.page')], dots=[...document.querySelectorAll('.dot')];
+ const prev=document.getElementById('prev'), next=document.getElementById('next');
+ let current=0;
+ function show(i){
+   current=(i+pages.length)%pages.length;
+   pages.forEach((p,n)=>p.classList.toggle('active',n===current));
+   dots.forEach((d,n)=>d.classList.toggle('active',n===current));
+   prev.disabled=current===0; next.textContent=current===pages.length-1?'Xem lại ↻':'Tiếp →';
+   petalsBurst(8);
+ }
+ prev.addEventListener('click',()=>show(current-1));
+ next.addEventListener('click',()=>show(current+1));
+ dots.forEach((d,i)=>d.addEventListener('click',()=>show(i)));
+ let startX=0,startY=0;
+ document.getElementById('deck').addEventListener('touchstart',e=>{startX=e.changedTouches[0].clientX;startY=e.changedTouches[0].clientY},{passive:true});
+ document.getElementById('deck').addEventListener('touchend',e=>{
+   const dx=e.changedTouches[0].clientX-startX,dy=e.changedTouches[0].clientY-startY;
+   if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy))show(current+(dx<0?1:-1));
+ },{passive:true});
+ const layer=document.getElementById('petals');
+ const symbols=['🌸','🌷','✿','❀','💮'];
+ let active=0;
+ const MAX_PETALS=18;
+ function addPetal(){
+   if(active>=MAX_PETALS)return;
+   active++;
+   const el=document.createElement('span');el.className='petal';
+   el.textContent=symbols[(Math.random()*symbols.length)|0];
+   el.style.setProperty('--x',(Math.random()*100)+'vw');
+   el.style.setProperty('--size',(11+Math.random()*10)+'px');
+   el.style.setProperty('--duration',(10+Math.random()*6)+'s');
+   el.style.setProperty('--delay','0s');
+   el.style.setProperty('--drift',(-45+Math.random()*90)+'px');
+   el.style.setProperty('--spin',(-260+Math.random()*520)+'deg');
+   layer.appendChild(el);
+   el.addEventListener('animationend',()=>{el.remove();active=Math.max(0,active-1)},{once:true});
+ }
+ function petalsBurst(n){for(let i=0;i<n;i++)setTimeout(addPetal,i*240)}
+ // Slow, smooth stream: transform-only animation and a strict cap for mobile Safari.
+ petalsBurst(10);
+ const stream=setInterval(()=>{if(!document.hidden)addPetal()},900);
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){/* pause new petals while hidden */}});
+ prev.disabled=true;
+})();
+</script>
+</body>
+</html>
